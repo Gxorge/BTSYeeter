@@ -2,7 +2,7 @@
   "configurations": [
     {
       "defines": [
-        "VERSION=\"0.1.0\"",
+        "VERSION=\"0.2.0\"",
         "ID=\"bts-yeeter\"",
         "__GNUC__",
         "__aarch64__"
@@ -13,7 +13,7 @@
         "${workspaceFolder}/include",
         "${workspaceFolder}/extern/**",
         "${workspaceFolder}/extern/libil2cpp/il2cpp/libil2cpp",
-        "C:/Android/ndk/**"
+        "G:/Android/ndk/**"
       ],
       "name": "Quest",
       "cStandard": "c11",

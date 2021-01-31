@@ -21,9 +21,9 @@ MAKE_HOOK_OFFSETLESS(PlayAni, void, BTSCharacterSpawnAnimationController* self) 
 }
 
 // Returns a logger, useful for printing debug messages
-const Logger& getLogger() {
-    static const Logger logger(modInfo);
-    return logger;
+Logger& getLogger() {
+    static Logger* logger = new Logger(modInfo);
+    return *logger;
 }
 
 // Called at the early stages of game loading
@@ -41,7 +41,7 @@ extern "C" void load() {
     il2cpp_functions::Init();
 
     getLogger().info("Installing hooks...");
-    INSTALL_HOOK_OFFSETLESS(PlayAni, il2cpp_utils::FindMethodUnsafe("", "BTSCharacterSpawnAnimationController", "PlayAnimation", 0));
-    INSTALL_HOOK_OFFSETLESS(PlayAni, il2cpp_utils::FindMethodUnsafe("", "BTSCharacterSpawnAnimationController", "ResumeAnimation", 0));
+    INSTALL_HOOK_OFFSETLESS(getLogger(), PlayAni, il2cpp_utils::FindMethodUnsafe("", "BTSCharacterSpawnAnimationController", "PlayAnimation", 0));
+    INSTALL_HOOK_OFFSETLESS(getLogger(), PlayAni, il2cpp_utils::FindMethodUnsafe("", "BTSCharacterSpawnAnimationController", "ResumeAnimation", 0));
     getLogger().info("Installed all hooks!");
 }

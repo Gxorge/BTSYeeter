@@ -4,14 +4,14 @@
   "info": {
     "name": "BTS Yeeter",
     "id": "bts-yeeter",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "url": null,
     "additionalData": {}
   },
   "dependencies": [
     {
       "id": "beatsaber-hook",
-      "versionRange": "^0.8.4",
+      "versionRange": "*",
       "additionalData": {
         "extraFiles": [
           "src/inline-hook"

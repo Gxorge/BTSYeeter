@@ -2,5 +2,5 @@
 & $PSScriptRoot/build.ps1
 
 if ($?) {
-    Compress-Archive -Path "./libs/arm64-v8a/libbts-yeeter.so", "./libs/arm64-v8a/libbeatsaber-hook_0_8_4.so", "./bmbfmod.json" -DestinationPath "./bts-yeeter_v0.1.0.zip" -Update
+    Compress-Archive -Path "./libs/arm64-v8a/libbts-yeeter.so", "./bmbfmod.json" -DestinationPath "./bts-yeeter_v0.2.0.zip" -Update
 }
