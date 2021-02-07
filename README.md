@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://github.com/IsGabriellaCurious/BTSYeeter/blob/master/cover-small.png" alt="BTS Yeeter" /> <br>
-  <b>BTS Yeeter</b></br>
+  <b>v0.2.0</b></br>
   Get rid of those flying BTS gremlins for good!
 </p>
 
