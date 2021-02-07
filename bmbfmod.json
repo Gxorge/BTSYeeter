@@ -2,6 +2,8 @@
   "id": "bts-yeeter",
   "name": "BTS Yeeter",
   "version": "0.2.0",
+  "icon": "cover.png",
+  "coverImageFilename": "cover.png",
   "author": "gabriella ✨#6859",
   "description": [
     "Stops the annoying BTS characters from spawning whilst playing their maps"
