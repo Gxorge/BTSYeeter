@@ -1,3 +1,5 @@
+![Team City](http://ssh.centurion.pw:8111/app/rest/builds/aggregated/strob:(buildType:(project:(id:BTSYeeter)))/statusIcon.svg)
+<br>
 <p align="center">
   <img src="https://github.com/IsGabriellaCurious/BTSYeeter/blob/master/cover-small.png" alt="BTS Yeeter" /> <br>
   <b>v0.2.0</b></br>
