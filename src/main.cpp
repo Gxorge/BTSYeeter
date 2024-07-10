@@ -1,47 +1,49 @@
 #include "main.hpp"
 
+#include "scotland2/shared/modloader.h"
 #include "GlobalNamespace/BTSCharacterSpawnController.hpp"
 #include "GlobalNamespace/BTSCharacterSpawnAnimationController.hpp"
+
 using namespace GlobalNamespace;
 
-static ModInfo modInfo; // Stores the ID and version of our mod, and is sent to the modloader upon startup
-
-// Loads the config from disk using our modInfo, then returns it for use
-Configuration& getConfig() {
-    static Configuration config(modInfo);
-    config.Load();
-    return config;
+MAKE_HOOK_MATCH(BTSCharacterSpawnAnimationController_PlayAnimation, &BTSCharacterSpawnAnimationController::PlayAnimation, void, BTSCharacterSpawnAnimationController* self) {
+  BTSCharacterSpawnAnimationController_PlayAnimation(self);
+  self->StopAnimation();
+  PaperLogger.info("BTS character was detected and stopped.");
 }
 
-// When the characters spawn, just stop their animiation and they go away!
-MAKE_HOOK_OFFSETLESS(PlayAni, void, BTSCharacterSpawnAnimationController* self) {
-    PlayAni(self);
-    self->StopAnimation();
-    getLogger().info("BTS character was detected and stopped.");
+MAKE_HOOK_MATCH(BTSCharacterSpawnAnimationController_ResumeAnimation, &BTSCharacterSpawnAnimationController::ResumeAnimation, void, BTSCharacterSpawnAnimationController* self) {
+  BTSCharacterSpawnAnimationController_ResumeAnimation(self);
+  self->StopAnimation();
+  PaperLogger.info("BTS character was detected and stopped.");
 }
 
-// Returns a logger, useful for printing debug messages
-Logger& getLogger() {
-    static Logger* logger = new Logger(modInfo);
-    return *logger;
+/**
+ * Stores the ID and version of our mod, and is sent to the modloader upon startup
+ */
+static modloader::ModInfo modInfo{MOD_ID, VERSION, 0};
+
+
+/**
+ * Called at the early stages of game loading
+ */
+MOD_EXTERN_FUNC void setup(CModInfo *info) noexcept {
+  *info = modInfo.to_c();
+
+  // File logging
+  Paper::Logger::RegisterFileContextId(PaperLogger.tag);
+
+  PaperLogger.info("Completed setup!");
 }
 
-// Called at the early stages of game loading
-extern "C" void setup(ModInfo& info) {
-    info.id = ID;
-    info.version = VERSION;
-    modInfo = info;
-	
-    getConfig().Load(); // Load the config file
-    getLogger().info("Completed setup!");
-}
+/**
+ * Called later on in the game loading - a good time to install function hooks
+ */
+MOD_EXTERN_FUNC void late_load() noexcept {
+  il2cpp_functions::Init();
 
-// Called later on in the game loading - a good time to install function hooks
-extern "C" void load() {
-    il2cpp_functions::Init();
-
-    getLogger().info("Installing hooks...");
-    INSTALL_HOOK_OFFSETLESS(getLogger(), PlayAni, il2cpp_utils::FindMethodUnsafe("", "BTSCharacterSpawnAnimationController", "PlayAnimation", 0));
-    INSTALL_HOOK_OFFSETLESS(getLogger(), PlayAni, il2cpp_utils::FindMethodUnsafe("", "BTSCharacterSpawnAnimationController", "ResumeAnimation", 0));
-    getLogger().info("Installed all hooks!");
+  PaperLogger.info("Installing hooks...");
+  INSTALL_HOOK(PaperLogger, BTSCharacterSpawnAnimationController_PlayAnimation);
+  INSTALL_HOOK(PaperLogger, BTSCharacterSpawnAnimationController_ResumeAnimation);
+  PaperLogger.info("Installed all hooks!");
 }
