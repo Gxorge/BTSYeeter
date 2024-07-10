@@ -1,28 +1,68 @@
 {
   "sharedDir": "shared",
   "dependenciesDir": "extern",
+  "version": "0.1.0",
   "info": {
     "name": "BTS Yeeter",
     "id": "bts-yeeter",
-    "version": "0.2.0",
+    "version": "0.1.0",
     "url": null,
-    "additionalData": {}
+    "additionalData": {
+      "overrideSoName": "libbts-yeeter.so",
+      "cmake": true
+    }
+  },
+  "workspace": {
+    "scripts": {
+      "build": [
+        "pwsh ./scripts/build.ps1"
+      ],
+      "clean": ["pwsh ./scripts/build.ps1 -clean"],
+      "copy": [
+        "pwsh ./scripts/copy.ps1 $0:?"
+      ],
+      "logcat": [
+        "pwsh ./scripts/start-logging.ps1"
+      ],
+      "qmod": [
+        "pwsh ./scripts/build.ps1",
+        "pwsh ./scripts/createqmod.ps1"
+      ],
+      "restart": [
+        "pwsh ./scripts/restart-game.ps1"
+      ],
+      "stack": [
+        "pwsh ./scripts/ndk-stack.ps1"
+      ],
+      "tomb": [
+        "pwsh ./scripts/pull-tombstone.ps1"
+      ]
+    },
+    "qmodIncludeDirs": ["./build", "./extern/libs"],
+    "qmodOutput": "./BTS Yeeter.qmod"
   },
   "dependencies": [
     {
       "id": "beatsaber-hook",
-      "versionRange": "*",
-      "additionalData": {
-        "extraFiles": [
-          "src/inline-hook"
-        ]
-      }
+      "versionRange": "^5.1.9",
+      "additionalData": {}
     },
     {
-      "id": "codegen",
-      "versionRange": "*",
+      "id": "paper",
+      "versionRange": "^3.6.4",
       "additionalData": {}
+    },
+    {
+      "id": "bs-cordl",
+      "versionRange": "3700.*",
+      "additionalData": {}
+    },
+    {
+      "id": "scotland2",
+      "versionRange": "^0.1.4",
+      "additionalData": {
+        "includeQmod": false
+      }
     }
-  ],
-  "additionalData": {}
+  ]
 }
